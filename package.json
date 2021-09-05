@@ -1,0 +1,30 @@
+{
+  "name": "notion-notelifier",
+  "version": "1.0.0",
+  "description": "A simple Javascript application to retrieve Notion book notes, then send them via IFTTT webhooks to my phone.",
+  "main": "notion-notelifier.js",
+  "dependencies": {
+    "@notionhq/client": "^0.3.1",
+    "fs": "0.0.1-security",
+    "xmlhttprequest": "^1.8.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CooperParlee/notion-notelifier.git"
+  },
+  "keywords": [
+    "notion",
+    "IFTTT",
+    "webhook"
+  ],
+  "author": "Cooper Parlee (@cooperparlee)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/CooperParlee/notion-notelifier/issues"
+  },
+  "homepage": "https://github.com/CooperParlee/notion-notelifier#readme"
+}

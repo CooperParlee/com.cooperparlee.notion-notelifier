@@ -106,3 +106,4 @@ venv.bak/
 key.txt
 db.txt
 token.txt
+node_modules/*
