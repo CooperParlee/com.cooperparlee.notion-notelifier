@@ -104,3 +104,4 @@ venv.bak/
 .mypy_cache/
 
 key.txt
+db.txt
