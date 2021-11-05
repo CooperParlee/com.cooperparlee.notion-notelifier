@@ -14,7 +14,9 @@ console.log(process.env.NOTION_DATABASE_ID);
 console.log(process.env.NOTION_KEY);
 
 ;(async ()=> {
-    const listUsersResponse = await notion.users.list();
-    console.log(await listUsersResponse);
+    const response = await notion.databases.query({
+        database_id: "323b283f6e6a482c8b32c13f58580ee6",
+    })
+    console.log(response);
 })()
 
