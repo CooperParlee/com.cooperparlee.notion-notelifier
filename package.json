@@ -1,14 +1,14 @@
 {
   "name": "notion-notelifier",
+  "type": "module",
   "version": "1.0.0",
   "description": "A simple Javascript application to retrieve Notion book notes, then send them via IFTTT webhooks to my phone.",
   "main": "notion-notelifier.js",
   "dependencies": {
-    "@notionhq/client": "^0.3.1",
+    "@notionhq/client": "^0.3.3",
     "fs": "0.0.1-security",
     "xmlhttprequest": "^1.8.0"
   },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
