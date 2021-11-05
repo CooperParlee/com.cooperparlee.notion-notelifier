@@ -1,0 +1,5 @@
+For future reference: to store things into node environment variables,
+use the following command;
+export VARIABLE_NAME=...
+
+Then, to reference later, you use it like process.env.VARIABLE_NAME
