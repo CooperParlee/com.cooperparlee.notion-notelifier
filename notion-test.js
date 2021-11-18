@@ -7,6 +7,8 @@
 
 import { Client } from "@notionhq/client"
 import dotenv from 'dotenv'
+import fs from 'fs'
+
 dotenv.config()
 
 const notion = new Client({auth: process.env.NOTION_KEY})
@@ -17,8 +19,16 @@ console.log(process.env.NOTION_KEY);
 
 ;(async ()=> {
     const response = await notion.databases.query({
-        database_id: "323b283f6e6a482c8b32c13f58580ee6",
+        database_id: process.env.NOTION_DATABASE_ID,
     })
-    console.log(response);
+    //console.log(response);
+
+    fs.writeFile("test.txt", JSON.stringify(response), function(err){
+        if(err) {
+	    console.log(err);
+        }
+    });
+    //var list = JSON.parse(response);
+    //list.forEach(element => console.log(JSON.stringify(element)));
 })()
 
