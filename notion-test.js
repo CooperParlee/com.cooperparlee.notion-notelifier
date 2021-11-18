@@ -21,7 +21,7 @@ console.log(process.env.NOTION_KEY);
     const response = await notion.databases.query({
         database_id: process.env.NOTION_DATABASE_ID,
     })
-    //console.log(response);
+    //console.log(response.results);
 
     fs.writeFile("test.txt", JSON.stringify(response), function(err){
         if(err) {
@@ -29,6 +29,8 @@ console.log(process.env.NOTION_KEY);
         }
     });
     //var list = JSON.parse(response);
-    //list.forEach(element => console.log(JSON.stringify(element)));
-})()
+    for (const element of response.results) {
+        console.log(element.properties.Name.title[0].text.content);
+    }
 
+})()
