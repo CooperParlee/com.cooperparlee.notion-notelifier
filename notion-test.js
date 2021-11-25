@@ -18,9 +18,7 @@ console.log(process.env.NOTION_DATABASE_ID);
 console.log(process.env.NOTION_KEY);
 
 ;(async ()=> {
-    const response = await notion.databases.query({
-        database_id: process.env.NOTION_DATABASE_ID,
-    })
+    const response = await queryDBResponse(process.env.NOTION_DATABASE_ID);
     //console.log(response.results);
 
     fs.writeFile("test.txt", JSON.stringify(response), function(err){
@@ -31,6 +29,16 @@ console.log(process.env.NOTION_KEY);
     //var list = JSON.parse(response);
     for (const element of response.results) {
         console.log(element.properties.Name.title[0].text.content);
+        var elementDBResult = await queryDBResponse(element.id);
+        console.log();
     }
 
 })()
+
+async function queryDBResponse(database) {
+    const response = await notion.databases.query({
+        database_id: database,
+    })
+
+    return response;
+}
