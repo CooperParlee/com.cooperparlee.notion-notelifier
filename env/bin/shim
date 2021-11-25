@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+export NODE_PATH='/home/cooper/proj/com.cooperparlee.notion-notelifier/env/lib/node_modules'
+export NPM_CONFIG_PREFIX='/home/cooper/proj/com.cooperparlee.notion-notelifier/env'
+export npm_config_prefix='/home/cooper/proj/com.cooperparlee.notion-notelifier/env'
+exec 'env/bin/node' "$@"
