@@ -21,7 +21,7 @@ console.log(process.env.NOTION_KEY);
     const response = await queryDBResponse(process.env.NOTION_DATABASE_ID);
     //console.log(response.results);
 
-    fs.writeFile("test.txt", JSON.stringify(response), function(err){
+    fs.writeFile("test.json", JSON.stringify(response), function(err){
         if(err) {
 	    console.log(err);
         }
@@ -29,8 +29,19 @@ console.log(process.env.NOTION_KEY);
     //var list = JSON.parse(response);
     for (const element of response.results) {
         console.log(element.properties.Name.title[0].text.content);
-        var elementDBResult = await queryDBResponse(element.id);
-        console.log();
+        var elementSubpage = await queryChildPageInfo(element.id);
+        var quotelistDB = await queryDBResponse(elementSubpage.results[0].id);
+
+        fs.writeFile("test2.json", JSON.stringify(quotelistDB), function(err){
+            if(err) {
+            console.log(err);
+            }
+        });
+        for (const quote of quotelistDB){
+            console.log();
+        }
+        
+        return;
     }
 
 })()
@@ -40,5 +51,13 @@ async function queryDBResponse(database) {
         database_id: database,
     })
 
+    return response;
+}
+
+async function queryChildPageInfo(id){
+    const response = await notion.blocks.children.list({
+        block_id: id,
+        page_size: 50,
+    });
     return response;
 }
