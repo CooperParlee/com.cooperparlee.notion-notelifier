@@ -19,14 +19,12 @@ console.log(process.env.NOTION_KEY);
 
 ;(async ()=> {
     const response = await queryDBResponse(process.env.NOTION_DATABASE_ID);
-    //console.log(response.results);
 
     fs.writeFile("test.json", JSON.stringify(response), function(err){
         if(err) {
 	    console.log(err);
         }
     });
-    //var list = JSON.parse(response);
     for (const element of response.results) {
         console.log(element.properties.Name.title[0].text.content);
         var elementSubpage = await queryChildPageInfo(element.id);
@@ -37,8 +35,15 @@ console.log(process.env.NOTION_KEY);
             console.log(err);
             }
         });
-        for (const quote of quotelistDB){
-            console.log();
+        for (const quote of quotelistDB.results){
+            try{
+                const text = quote.properties.Quote.title[0].plain_text;
+                if(text){
+                    console.log(text);
+                }
+                continue;
+            } catch (error) {console.error(error);}
+            
         }
         
         return;
