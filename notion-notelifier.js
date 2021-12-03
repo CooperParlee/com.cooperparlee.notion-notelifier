@@ -1,35 +1,48 @@
 /*
 * Notion Notelifier
 * @author Cooper Parlee
-* 5 September 2021
+* 25 November 2021
 * A simple Javascript application to retrieve Notion book notes, then send them via
-* IFTTT webhooks to my phone.
+* email.
 */
 
-// Refs
-var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
-var fs = require('fs');
+import { Client } from "@notionhq/client"
+import dotenv from 'dotenv'
+import fs from 'fs'
 
-function ReadFromFile(fileURL){
-    try {  
-        var data = fs.readFileSync(fileURL, 'utf8');
-        return data;  
-    } catch(e) {
-        console.log('Error:', e.stack);
-        return ""; 
+dotenv.config();
+const args = process.argv;
+
+const notion = new Client({auth: process.env.NOTION_KEY});
+const databaseId = process.env.NOTION_DATABASE_ID;
+
+function compileFromDB (dbID, bookName){
+    //Format quote...,pg,book,\n
+    var file = fs.readFile("db.csv");
+    const quoteListDB = await queryDBResponse(dbID);
+    
+    for (const quote of quoteListDB.results){
+        const text;
+        const loc;
+        try {
+            text = quote.properties.Quote.title[0].plain_text;
+            loc = quote.properties.Location.rich_text[0].text.content;
+        } catch (error) { console.error(error); continue; }
     }
 }
 
-// Consts
-const targetURL = "https://maker.ifttt.com/trigger/notion_notelifier/with/key/" + ReadFromFile("key.txt");
+async function queryDBResponse(database) {
+    const response = await notion.databases.query({
+        database_id: database,
+    })
 
-// Main
+    return response;
+}
 
-var req = new XMLHttpRequest();
-req.open("POST", targetURL, true);
-req.setRequestHeader('Content-Type', 'application/json');
-req.send(JSON.stringify({
-    "value1" : "bee movie",
-    "value2" : "pebis",
-    "value3" : "holy shit im cold"
-}))
+async function queryChildPageInfo(id){
+    const response = await notion.blocks.children.list({
+        block_id: id,
+        page_size: 1000,
+    });
+    return response;
+}
