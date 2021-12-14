@@ -8,6 +8,7 @@
 import { Client } from "@notionhq/client"
 import dotenv from 'dotenv'
 import fs from 'fs'
+const email = require("./modules/email");
 
 dotenv.config()
 
@@ -17,6 +18,9 @@ const databaseId = process.env.NOTION_DATABASE_ID
 console.log(process.env.NOTION_DATABASE_ID);
 console.log(process.env.NOTION_KEY);
 
+const apiUser = process.env.apiUser;
+const apiPass = process.env.apiPass;
+
 ;(async ()=> {
     const response = await queryDBResponse(process.env.NOTION_DATABASE_ID);
 
@@ -25,6 +29,7 @@ console.log(process.env.NOTION_KEY);
 	    console.log(err);
         }
     });
+    email.sendTestMail("", apiUser, apiPass);
     for (const element of response.results) {
         console.log(element.properties.Name.title[0].text.content);
         var elementSubpage = await queryChildPageInfo(element.id);
